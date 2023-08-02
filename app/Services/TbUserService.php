@@ -9,7 +9,7 @@ class TbUserService
 {
     public static function getAllData()
     {
-        return TbUser::all();
+        return TbUser::orderBy('username')->get();
     }
 
     public static function validateStoreData($request)
