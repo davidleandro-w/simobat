@@ -49,6 +49,6 @@ class TbJenisObatService
 
     public static function getAllDataForOptions()
     {
-        return TbJenisObat::all();
+        return TbJenisObat::orderBy('nama_jenis_obat')->get();
     }
 }
