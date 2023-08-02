@@ -8,7 +8,8 @@ class TbObatService
 {
     public static function getAllData()
     {
-        return TbObat::whereHas('jenis_obat')->orderBy('nama_obat')->get();
+        return TbObat::with('jenis_obat')
+            ->whereHas('jenis_obat')->orderBy('tanggal_expired')->get();
     }
 
     public static function validateStoreData($request)
