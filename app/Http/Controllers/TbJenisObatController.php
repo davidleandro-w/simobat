@@ -2,83 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TbJenisObat;
+use App\Services\TbJenisObatService;
 use Illuminate\Http\Request;
 
 class TbJenisObatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $jenis_obats = TbJenisObatService::getAllData();
+        return view('jenis-obat.index', compact('jenis_obats'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        TbJenisObatService::validateStoreData($request);
+
+        try {
+            TbJenisObatService::storeData($request);
+            return session()->flash('success', 'Data berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            return session()->flash('error', 'Data gagal ditambahkan, ' . $th->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $response = TbJenisObatService::validateUpdateData($request, $id);
+
+        if ($response === true) {
+            TbJenisObatService::updateData($request, $id);
+            return session()->flash('success', 'Data berhasil diubah');
+        } else {
+            return session()->flash('error', $response);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        TbJenisObat::destroy($id);
+        return session()->flash('success', 'Data berhasil dihapus');
     }
 }
