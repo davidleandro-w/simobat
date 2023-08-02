@@ -18,7 +18,7 @@
     2. php artisan db:seed
     3. php artisan serve
     ```
-4. Login dengan
+4. login with this account
    ```
    username=superadmin
    password=superadmin
