@@ -20,6 +20,7 @@ class TbUserController extends Controller
 
         try {
             TbUserService::storeData($request);
+            return session()->flash('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             return session()->flash('error', 'Data gagal ditambahkan, ' . $th->getMessage());
         }
